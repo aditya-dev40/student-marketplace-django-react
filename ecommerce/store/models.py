@@ -18,10 +18,13 @@ class Category(models.Model): # it is inheritance: it is inheriting form models.
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("list-category", args=[self.slug])
     
 class Product(models.Model):
 
-    Category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE, null=True)
     
     title = models.CharField(max_length=250)
 
