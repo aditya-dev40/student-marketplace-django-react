@@ -70,4 +70,26 @@ class CartSession():
 
         return total
 
+    def delete(self, product):
+        
+        product_id = str(product)
+
+        if product_id in self.cart:
+
+            del self.cart[product_id]
+
+        self.session.modified = True
+
+    def update(self, product, qty):
+        
+        product_id = str(product)
+
+        product_quantity = qty
+
+        if product_id in self.cart:
+
+            self.cart[product_id]['qty'] = product_quantity
+
+        self.session.modified = True
+
 
