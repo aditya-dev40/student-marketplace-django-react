@@ -34,6 +34,9 @@ class CartSession():
 
             self.cart[product_id] = {'price': str(product.price), 'qty': product_qty}
 
+        print("CART CONTENTS:", self.cart)
+
+
         self.session.modified = True
 
     def __len__(self):
@@ -46,7 +49,10 @@ class CartSession():
 
         products = Product.objects.filter(id__in=all_product_ids)
 
-        cart = self.cart.copy()
+        import copy
+        cart = copy.deepcopy(self.cart)
+
+        # cart = self.cart.copy()
 
         for product in products:
 
