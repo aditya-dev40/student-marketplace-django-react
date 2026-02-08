@@ -36,7 +36,7 @@
 
                 <div class="col-6 text-end">
                   <span class="h6 fw-bold"
-                    >$ {{ product.price|mul:item.qty }}
+                    >₹ {{ product.price|mul:item.qty }}
                   </span>
                 </div>
               </div>
@@ -90,7 +90,7 @@
 
       <div class="col-12 text-end">
         <div class="h6 fw-bold">
-          Sub total: $ {{ cart.get_total }}
+          Sub total: ₹ {{ cart.get_total }}
           <div id="total" class="d-inline-flex"><!-- cart.get_total --></div>
         </div>
       </div>

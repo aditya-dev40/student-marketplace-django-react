@@ -21,26 +21,18 @@
 
         <div class="container bg-white shadow-md p-5 form-layout">
 
-            <h3> Login to your account </h3>
+            <h3> Account Deletion </h3>
 
-            <br>
-            <br>
 
             <form method="POST" autocomplete="off">
 
                 {% csrf_token %}
 
-                {{ form.username|as_crispy_field }}
-            
-                <br> <br>
+                <p> Are you sure that you want to delete your account? </p>
 
-                {{ form.password|as_crispy_field }}
+                <br>
 
-
-
-                <br> <br>
-
-                <button type="submit" class="btn btn-dark btn-lg w-100 p-2"> &nbsp; Login</button>
+                <button type="submit" class="btn btn-danger btn-lg w-100 p-2"> &nbsp; Delete </button>
 
 
             </form>

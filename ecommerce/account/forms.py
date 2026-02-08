@@ -1,6 +1,10 @@
 from django import forms 
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.forms import TextInput, PasswordInput
+
+
+# Registration Form
 
 class CreateUserForm(UserCreationForm):
 
@@ -33,3 +37,31 @@ class CreateUserForm(UserCreationForm):
             raise forms.ValidationError("Your email is too long")
         
         return email
+    
+# Authentication Form
+
+class LoginForm(AuthenticationForm):
+
+    username = forms.CharField(widget=TextInput())
+    password = forms.CharField(widget=PasswordInput())
+
+
+
+# Update Form
+
+class UpdateUserForm(forms.ModelForm):
+
+    password = None
+
+    def __init__(self, *args, **kwargs):
+        super(UpdateUserForm, self).__init__(*args, **kwargs)
+
+        # Mark email field as required  
+
+        self.fields['email'].required = True 
+
+    class Meta:
+
+        model = User
+
+        fields = ['username', 'email']
