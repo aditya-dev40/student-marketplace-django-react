@@ -16,8 +16,18 @@
 
       <br />
 
-      <a href="{% url 'register' %}" class="btn btn-primary my-2"> Create an account </a>
+      {% if user.is_authenticated %}
+
+      
+      {% else %}
+
+      <a href="{% url 'register' %}" class="btn btn-primary my-2"> <i class="fa-solid fa-user-plus"></i> &nbsp; Create your account </a>
+
+      {% endif %}
+
+    
     </div>
+
   </div>
 </section>
 
@@ -29,7 +39,7 @@
 
     <hr />
 
-    <br />
+ 
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
     

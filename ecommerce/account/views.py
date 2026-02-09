@@ -154,6 +154,8 @@ def profile_management(request):
 
     # updating our user's username and email
 
+    user_form = UpdateUserForm(instance=request.user)
+
     if request.method == 'POST':
 
         user_form = UpdateUserForm(request.POST, instance=request.user)
@@ -164,8 +166,6 @@ def profile_management(request):
 
             return redirect('dashboard')
         
-    user_form = UpdateUserForm(instance=request.user)
-
     context = {'user_form':user_form}
 
     return render(request, 'account/profile-management.html', context=context)

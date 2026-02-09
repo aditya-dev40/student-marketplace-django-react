@@ -23,6 +23,7 @@
 
             <h3> Account Deletion </h3>
 
+            <hr class="border-top border-secondary opacity-100">
 
             <form method="POST" autocomplete="off">
 
@@ -30,12 +31,16 @@
 
                 <p> Are you sure that you want to delete your account? </p>
 
+
                 <br>
 
-                <button type="submit" class="btn btn-danger btn-lg w-100 p-2"> &nbsp; Delete </button>
-
+                <button type="submit" class="btn btn-danger btn-lg w-100 p-2"> Delete your account </button>
 
             </form>
+
+            <br>
+
+            <a class="btn btn-primary btn-lg w-100 p-2" type="button"  href="{% url 'profile-management' %}"> Go back </a>
 
         </div>
 

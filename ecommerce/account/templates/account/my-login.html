@@ -22,8 +22,8 @@
         <div class="container bg-white shadow-md p-5 form-layout">
 
             <h3> Login to your account </h3>
+            <hr class="border-top border-secondary opacity-100">
 
-            <br>
             <br>
 
             <form method="POST" autocomplete="off">
@@ -40,7 +40,23 @@
 
                 <br> <br>
 
-                <button type="submit" class="btn btn-dark btn-lg w-100 p-2"> &nbsp; Login</button>
+                <button type="submit" class="btn btn-primary w-100 p-2 text-white"> <i class="fa-solid fa-key"></i> &nbsp; Login</button>
+                
+                <br> <br>
+                
+                <div class="text-center">
+
+                    <a href="{% url 'register' %}"> Don't have an account? </a>
+
+                </div>
+
+                <br>
+                
+                <div class="text-center">
+
+                    <a href="{% url 'my-login' %}"> Forgotten your password? </a>
+
+                </div>
 
 
             </form>

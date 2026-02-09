@@ -53,6 +53,12 @@ class UpdateUserForm(forms.ModelForm):
 
     password = None
 
+    class Meta:
+
+        model = User
+
+        fields = ['username', 'email']
+
     def __init__(self, *args, **kwargs):
         super(UpdateUserForm, self).__init__(*args, **kwargs)
 
@@ -60,8 +66,18 @@ class UpdateUserForm(forms.ModelForm):
 
         self.fields['email'].required = True 
 
-    class Meta:
+    def clean_email(self):
 
-        model = User
+        email = self.cleaned_data.get("email")
 
-        fields = ['username', 'email']
+        if User.objects.filter(email = email).exclude(pk=self.instance.pk).exists():
+            
+            raise forms.ValidationError('This email is invalid or email already exists.')
+        
+        # Len function updated 
+        
+        if len(email) >= 350:
+
+            raise forms.ValidationError("Your email is too long")
+        
+        return email
