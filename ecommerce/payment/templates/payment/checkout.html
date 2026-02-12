@@ -131,21 +131,39 @@
 
     </body>
 
-
-    <!-- Ajax integration -->
-
-    
-
     <script>
+        // complete-order
 
+        document.addEventListener("submit", function (e) {
 
-    
+        e.preventDefault();
 
+        const formData = new FormData();
 
-   </script>
+        formData.append("name", document.getElementById("name").value);
+        formData.append("email", document.getElementById("email").value);
+        formData.append("address1", document.getElementById("address1").value);
+        formData.append("address2", document.getElementById("address2").value);
+        formData.append("city", document.getElementById("city").value);
+        formData.append("state", document.getElementById("state").value);
+        formData.append("zipcode", document.getElementById("zipcode").value);
+        formData.append("csrfmiddlewaretoken", "{{ csrf_token }}");
+        formData.append("action", "post");
 
+        fetch("{% url 'complete-order' %}", {
+            method: "POST",
+            body: formdata,
+        })
+        .then(response => response.json())
+        .then(data => {
+            
+            console.log(data)
 
+            });
+        });
 
+    </script>
 
+   
 
 {% endblock %}
