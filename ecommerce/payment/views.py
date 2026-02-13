@@ -6,10 +6,25 @@ from cart.cart import CartSession
 
 from django.http import JsonResponse
 
+import requests
+
+from decimal import Decimal
+
 
 # Create your views here.
 
 def checkout(request):
+
+
+    cart = CartSession(request)
+    total_inr = cart.get_total()
+
+    # fetch latest rate
+    response = requests.get("https://api.exchangerate-api.com/v4/latest/INR")
+    data = response.json()
+    rate = Decimal(str(data["rates"]["USD"])) 
+    
+    total_usd = (total_inr * rate).quantize(Decimal("0.01"))
 
     # Users with accounts -- Pre-fill the form
 
@@ -21,7 +36,7 @@ def checkout(request):
 
             shipping_address = ShippingAddress.objects.get(user=request.user.id)
 
-            context = {'shipping': shipping_address}
+            context = {'shipping': shipping_address, 'total_usd':total_usd}
 
             return render(request, 'payment/checkout.html', context=context)
         
@@ -29,13 +44,21 @@ def checkout(request):
 
             # Authenticated users with no shipping information
 
-            return render(request, 'payment/checkout.html')
+            context = {
+                'total_usd':total_usd
+            }
+
+            return render(request, 'payment/checkout.html', context=context)
         
     else:
 
         # Guest users
         
-        return render(request, 'payment/checkout.html')
+        context = {
+            'total_usd':total_usd
+        }
+
+        return render(request, 'payment/checkout.html', context=context)
     
 def complete_order(request):
 
@@ -96,7 +119,7 @@ def complete_order(request):
             for item in cart:
 
                 OrderItem.objects.create(order_id=order_id, product=item['product'], quantity=item['qty'],
-                                            prict=item['price'])
+                                            price=item['price'])
                 
 
         order_success = True

@@ -157,5 +157,9 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
+# Allow PayPal Popups
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
+
 
 
