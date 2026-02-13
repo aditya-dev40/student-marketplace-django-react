@@ -2,29 +2,6 @@
 
 A Django-based student marketplace for buying, selling, and exchanging second-hand items. Implements core cart and product functionality, with planned support for item exchange and price adjustment.
 
----
-
-## Current Features
-
-- Add, update, and delete cart items
-- Product listing and detail pages
-- User registration & login system
-- Email verification during registration
-- Secure environment variable management using `.env`
-
----
-
-## Features In Progress / Planned
-
-- Order placement system
-- Shipping information & tracking
-- Payment gateway integration
-- Cloud storage integration (e.g., AWS S3)
-- Production database setup (PostgreSQL / MySQL)
-- Item exchange with price difference adjustment
-
----
-
 ## 🛠️ Tech Stack
 
 - Python
