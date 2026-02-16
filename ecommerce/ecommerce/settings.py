@@ -24,12 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+ji)yvtwu=lq0dsjtyh_2ahc^%^f6ysdfu4w-nv^^mlk(6oh_g'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = ['http://ecommerce-dev.ap-south-1.elasticbeanstalk.com/']
 
 
 # Application definition
@@ -49,6 +51,8 @@ INSTALLED_APPS = [
 
     'mathfilters',
     'crispy_forms', # Crispy forms
+
+    'storages',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -88,13 +92,14 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -137,7 +142,6 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-
 MEDIA_ROOT = BASE_DIR / 'static/media'
 
 
@@ -145,21 +149,69 @@ MEDIA_ROOT = BASE_DIR / 'static/media'
 
 load_dotenv()
 
-EMAIL_BACKEND = os.getenv(
-    'EMAIL_BACKEND',
-    'django.core.mail.backends.smtp.EmailBackend'
-)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
-
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # Allow PayPal Popups
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
+
+
+# AWS configuration
+
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+
+
+# Amazon S3 Integration
+
+AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+
+
+STORAGES = {
+    
+    # Media file (image) management
+
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+
+    # CSS and JS file management
+
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+}
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_FILE_OVERWIRTE = False
+
+
+# RDS (Database) configuration settings:
+
+DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': os.environ.get('DB_NAME'),
+
+        'USER': os.environ.get('DB_USER'),
+        
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+
+        'HOST': os.environ.get('DB_HOST'),
+
+        'PORT': '5432',
+    }
+}
 
 
 

@@ -32,7 +32,7 @@ class Product(models.Model):
 
     description = models.TextField(blank=True)
 
-    price = models.DecimalField(decimal_places=2, max_digits=4)
+    price = models.DecimalField(decimal_places=2, max_digits=12)
 
     slug = models.SlugField(max_length=250)
 
