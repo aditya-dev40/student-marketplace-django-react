@@ -43,7 +43,7 @@ def register(request):
             user.is_active = False
             user.save()
 
-            # Build verification URL dynamically (Production style)
+            # Build verification URL dynamically 
             verification_link = request.build_absolute_uri(
                 f"/account/email-verification/{urlsafe_base64_encode(force_bytes(user.pk))}/{user_tokenizer_generate.make_token(user)}/"
             )
